@@ -11,7 +11,7 @@ import nltk
 For web development.
 #### pandas:
 For managing and analyzing CSV data.
-scikit-learn:
+#### scikit-learn:
 For text processing and machine learning.
 #### nltk: 
 For natural language processing and text filtering.
