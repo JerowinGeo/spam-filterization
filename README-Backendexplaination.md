@@ -22,24 +22,27 @@ Ensures stopwords are available
 
 ##### What are Stopwords?
 Stopwords are common words in a language (e.g., "the", "is", "in", "and") that usually do not carry significant meaning and are often excluded from text processing tasks to focus on more meaningful words.
-Why Remove Stopwords?: Stopwords can reduce noise in text data when analyzing or building models, as they don't contribute much to the context or meaning.
+#### Why Remove Stopwords?
+Stopwords can reduce confusion in text data when analyzing or building models, as they don't contribute much to the context or meaning.
 
 ### Flask App Initialization
 ```
 app = Flask(__name__)
 ```
+
 ### Spam Filter Class
 ```
 class HybridSpamFilter:
 ```
-### A class combining:
+
+as it is a hybrid filter it contain more than one type of filter in this filter it contains the following below;
 
 #### Heuristic Filtering: 
-Detects spam based on specific keywords.
+Detects spam based on specific keywords. it uses the keywords in the data set that is loaded and classifies the mail.
 #### Reputation Filtering: 
-Flags emails from known spam domains.
+finds the emails from known spam domains. that is it classify based on the senders email(for example if the email is from a suspicious sender the mail will be considered a spam.)
 #### Machine Learning: 
-Uses a Naive Bayes model trained on labeled email data.
+Uses a Naive Bayes model trained on labeled email data.(it uses the given dataset and trains the model to classify the spam mail)
 
 ### Constructor: Initialization
 ```
@@ -50,13 +53,13 @@ def __init__(self, heuristic_file, reputation_file):
     self.blacklisted_domains = self.load_reputation_list(reputation_file)
 ```
 #### self.vectorizer:
-Prepares to convert email text into numerical vectors.
+Prepares to convert email text into numerical vectors.that is it converts the text to a matrix format by using known vocabularies
 #### self.model:
-A Naive Bayes classifier instance.
+A Naive Bayes classifier instance. it uses the training and exisiting dataset and classifies.
 #### self.heuristic_rules: 
-Loads spam-related keywords from a file.
+Loads spam-related keywords from a file. this dataset is used in heuristic filter.
 #### self.blacklisted_domains:
-Loads a list of blacklisted email domains.
+Loads a list of blacklisted email domains. this dataset is used in reputation filter.
 
 ### Loading Heuristic Rules and Reputation Data
 ```
@@ -93,10 +96,6 @@ def reputation_filter(self, sender_email):
     domain = sender_email.lower().strip().split("@")[-1]
     return domain in self.blacklisted_domains
 ```
-### Heuristic Filter: 
-Checks if any spam-related keyword exists in the email content.
-### Reputation Filter:
-Flags emails from domains in the blacklist.
 
 ### Prediction Logic
 ```
@@ -109,6 +108,10 @@ def predict(self, email, sender_email):
     prediction = self.model.predict(email_vector)
     return "Spam" if prediction[0] == 1 else "Not Spam"
 ```
+first it checks for heuristic filter and if it is spam it shows as spam .
+orelse it goes and checks using reputation filtering if it true it shows spam.
+then go for the third type of filter which is using naive bayes and it is true, it shows as spam ,if it is not spam it shows as not spam.
+
 ### Initialize the Filter
 ```
 heuristic_file = "heuristic_rules.txt"
@@ -125,7 +128,7 @@ filter_system.train_model(training_file)
 def home():
     return render_template('frontend.html')
 ```
-Renders an HTML file (frontend.html) that serves as the user interface.
+it is used to bind the url path with the backend that is to connect frontend program(html program) with backend.
 
 ### Classify Email
 ```
@@ -137,6 +140,7 @@ def classify_email():
     result = filter_system.predict(email_content, sender_email)
     return jsonify({"result": result})
 ```
+
 #### Input: 
 Accepts a POST request with email content and sender email in JSON format.
 #### Processing: 
