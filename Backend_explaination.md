@@ -1,4 +1,5 @@
-### first we need to import some modules and libararies
+### Import
+First we need to import some modules and libararies
 ```
 from flask import Flask, request, jsonify, render_template
 import pandas as pd
