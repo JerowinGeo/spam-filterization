@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hybrid Spam Filter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Hybrid Spam Filter</h1>
+        <form id="emailForm">
+            <label for="senderEmail">Sender Email:</label>
+            <input type="email" id="senderEmail" required>
+            <label for="emailContent">Email Content:</label>
+            <textarea id="emailContent" rows="10" required></textarea>
+            <button type="submit">Classify Email</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const senderEmail = document.getElementById('senderEmail').value;
+            const emailContent = document.getElementById('emailContent').value;
+
+            fetch('/classify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ senderEmail, emailContent })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = `Result: ${data.result}`;
+            });
+        });
+    </script>
+</body>
+</html>

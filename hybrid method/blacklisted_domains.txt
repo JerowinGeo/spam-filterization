@@ -1,0 +1,5 @@
+spamdomain.com
+malicious.com
+fraudsite.net
+phishingsite.org
+bademail.com
