@@ -1,4 +1,4 @@
-first we need to import some modules and libararies
+### first we need to import some modules and libararies
 ```
 from flask import Flask, request, jsonify, render_template
 import pandas as pd
@@ -7,16 +7,16 @@ from sklearn.naive_bayes import MultinomialNB
 from nltk.corpus import stopwords
 import nltk
 ```
-####Flask:
+#### Flask:
 For web development.
-####pandas:
+#### pandas:
 For managing and analyzing CSV data.
 scikit-learn:
 For text processing and machine learning.
-####nltk: 
+#### nltk: 
 For natural language processing and text filtering.
 Provides a list of stopwords to filter out common words.
-####nltk.download('stopwords'): 
+#### nltk.download('stopwords'): 
 Ensures stopwords are available
 
 What are Stopwords?
